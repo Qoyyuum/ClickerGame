@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Clicker Game Sample</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                        <h1>Clicking Game</h1>
+                        <p class="lead">Click to Kill!</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- For alerts!! -->
+                    <div id="system"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Game Stats:</p>
+                </div>
+                <div class="col-md-6">
+                    <p>Shop for upgrades</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>Current click damage = <span class="badge" id="output1"></span></p>
+                            <p>Current increment damage = <span class="badge" id="output2"></span></p>
+                        </div>
+                    </div>
+                    <p>Current Damages Clicked: <span class="badge" id="dps"></span></p>
+                    <button onclick="increaseDPS()" class="btn btn-lg btn-info">Tap to Kill</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <button onclick="powerClick()" class="btn btn-success">Power Click (Cost: 20 DPS, increase click damage by 1)</button>
+                            <br />
+                            <button onclick="passiveClick()" class="btn btn-success">Click Staff (Hire Cost: 100 DPS, Generates 1 damage point every 10 seconds)</button>
+                            <br />
+                            <button onclick="stopper()" class="btn btn-lg btn-danger">STOP</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!-- Game Scripts -->
+        <script>
+        //Game Parameters
+        
+        var point = 1; // Starting point
+        var showClickDmg = document.getElementById('output1');
+        showClickDmg.innerHTML = point; //Display it in Game Stats for current Click Damage
+        
+        var incrementDamage = 0; //Starting increment damage
+        var incDmg = document.getElementById('output2');
+        incDmg.innerHTML = incrementDamage; //Display it in Game Stats for current increment Damage
+        
+        var currentPoint = 0;
+        var dpsOutput = document.getElementById('dps');
+        dpsOutput.innerHTML = currentPoint;
+        
+        function increaseDPS()
+        {
+            currentPoint = currentPoint + point + incrementDamage;
+            dpsOutput.innerHTML = currentPoint;
+        }
+        
+        function powerClick()
+        {
+            if(currentPoint >= 20)
+            {
+                currentPoint = currentPoint - 20;
+                point = point + 1;
+                showClickDmg.innerHTML = point;
+            }
+            else
+            {
+                document.getElementById('system').innerHTML = "<div class='alert alert-warning'>Insufficient points!</div>";
+            }
+        }
+        
+        //The above for click enhancement is done.
+        //Below is for passive increments and setting intervals
+        var interval1;
+        
+        function minorInc()
+        {
+            currentPoint = currentPoint + 1;
+        }
+        
+        function passiveClick()
+        {
+            interval1 = setInterval(minorInc, 10000);
+        }
+        
+        
+        
+        function stopper()
+        {
+            clearInterval(interval1);
+        }
+        </script>
+    </body>
+</html>
