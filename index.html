@@ -122,12 +122,12 @@ and open the template in the editor.
             else
             {
                 var remainingPoints = 100 - currentPoint;
-                document.getElementById('system').innerHTML = "<div class='alert alert-warning'>Insufficient points for Click Staff! You need " + remainingPoints + "</div>"; //Standard Error
+                document.getElementById('system').innerHTML = "<div class='alert alert-warning'>Insufficient points for Click Staff! You need " + remainingPoints + " more!</div>"; //Standard Error
             }
         }
         
         
-        
+        //For development purposes if the incremental won't stop or the timer is hogging any of my resources, this stopper will do the trick. Otherwise stop the browser manually.
         function stopper()
         {
             clearInterval(interval1);
