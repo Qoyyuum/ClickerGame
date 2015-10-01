@@ -88,10 +88,13 @@ and open the template in the editor.
                 currentPoint = currentPoint - 20;
                 point = point + 1;
                 showClickDmg.innerHTML = point;
+                document.getElementById('system').innerHTML = ""; //Clear display
+                document.getElementById('system').innerHTML = "<div class='alert alert-success'>Bought Power Click! Now it's " + point + "!</div>"; //Success message
             }
             else
             {
-                document.getElementById('system').innerHTML = "<div class='alert alert-warning'>Insufficient points!</div>";
+                var remainingPoints = 20 - currentPoint;
+                document.getElementById('system').innerHTML = "<div class='alert alert-warning'>Insufficient points! You need " + remainingPoints + " more!</div>"; //Standard Error
             }
         }
         
@@ -101,12 +104,26 @@ and open the template in the editor.
         
         function minorInc()
         {
-            currentPoint = currentPoint + 1;
+            currentPoint = currentPoint + incrementDamage;
+            dpsOutput.innerHTML = currentPoint;
         }
         
         function passiveClick()
         {
-            interval1 = setInterval(minorInc, 10000);
+            if (currentPoint >= 100)
+            {
+                incrementDamage++; //increase passive integer
+                incDmg.innerHTML = incrementDamage; //display the passive integer
+                currentPoint = currentPoint - 100; //
+                interval1 = setInterval('minorInc()', 1000);
+                document.getElementById('system').innerHTML = ''; //Reset system display
+                document.getElementById('system').innerHTML = "<div class='alert alert-warning'>You bought Click Staff! Increment Damage is now " + incrementDamage + "</div>"; //Show if its successful
+            }
+            else
+            {
+                var remainingPoints = 100 - currentPoint;
+                document.getElementById('system').innerHTML = "<div class='alert alert-warning'>Insufficient points for Click Staff! You need " + remainingPoints + "</div>"; //Standard Error
+            }
         }
         
         
